@@ -1,0 +1,31 @@
+# Monitor Citas Configuration File
+version: "1.0"
+
+# Application settings
+app:
+  name: Monitor Citas
+  description: Sistema de monitoreo de citas
+  
+# Database configuration
+database:
+  host: localhost
+  port: 5432
+  name: monitor_citas
+  user: postgres
+  password: 
+  
+# API configuration
+api:
+  host: 0.0.0.0
+  port: 8000
+  debug: false
+  
+# Logging configuration
+logging:
+  level: INFO
+  format: json
+  
+# Monitoring and alerts
+monitoring:
+  enabled: true
+  check_interval: 300  # seconds
