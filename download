@@ -1,0 +1,11 @@
+config_citas.py
+.env
+monitor_citas.log
+capturas/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.DS_Store
+Thumbs.db
