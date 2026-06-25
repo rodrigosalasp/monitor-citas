@@ -1,31 +1,45 @@
-# Monitor Citas Configuration File
-version: "1.0"
+name: Monitor citas jura
 
-# Application settings
-app:
-  name: Monitor Citas
-  description: Sistema de monitoreo de citas
-  
-# Database configuration
-database:
-  host: localhost
-  port: 5432
-  name: monitor_citas
-  user: postgres
-  password: 
-  
-# API configuration
-api:
-  host: 0.0.0.0
-  port: 8000
-  debug: false
-  
-# Logging configuration
-logging:
-  level: INFO
-  format: json
-  
-# Monitoring and alerts
-monitoring:
-  enabled: true
-  check_interval: 300  # seconds
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Espera aleatoria
+        run: |
+          python - <<'PY'
+          import random, time
+          espera = random.randint(0, 1200)
+          print(f"Esperando {espera} segundos antes de consultar...")
+          time.sleep(espera)
+          PY
+
+      - name: Ejecutar monitor
+        env:
+          NIE: ${{ secrets.NIE }}
+          NOMBRE_COMPLETO: ${{ secrets.NOMBRE_COMPLETO }}
+          EMAIL_ORIGEN: ${{ secrets.EMAIL_ORIGEN }}
+          EMAIL_DESTINO: ${{ secrets.EMAIL_DESTINO }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: python monitor_citas.py
