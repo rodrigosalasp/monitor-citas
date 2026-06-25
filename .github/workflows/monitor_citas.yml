@@ -9,7 +9,7 @@ on:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     steps:
       - name: Descargar repositorio
@@ -33,7 +33,7 @@ jobs:
           import time
 
           espera = random.randint(0, 1200)
-          print(f"Esperando {espera} segundos...")
+          print(f"Esperando {espera} segundos antes de consultar...")
           time.sleep(espera)
           PY
 
@@ -45,3 +45,13 @@ jobs:
           EMAIL_DESTINO: ${{ secrets.EMAIL_DESTINO }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: python monitor_citas.py
+
+      - name: Subir logs y capturas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados-monitor-citas
+          path: |
+            monitor_citas.log
+            capturas/
+          if-no-files-found: ignore
