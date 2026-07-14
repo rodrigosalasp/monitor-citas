@@ -1,17 +1,20 @@
 # Monitor citas jura
 
-Monitor automatizado para consultar disponibilidad de cita de jura de nacionalidad española.
+Monitor automático para consultar disponibilidad de cita de jura de nacionalidad española.
 
-## Archivos
+## Funciones principales
 
-- `monitor_citas.py`: script principal.
-- `requirements.txt`: dependencias.
-- `.github/workflows/monitor_citas.yml`: workflow de GitHub Actions.
-- `.gitignore`: excluye credenciales y archivos generados.
+- Ejecución horaria desde GitHub Actions.
+- Espera aleatoria antes de cada consulta.
+- Tres intentos ante fallos transitorios de conexión.
+- Correo ante posible disponibilidad o error final.
+- Historial acumulado en `historial_consultas.csv`.
+- Capturas ante posible cita o error.
+- Artefactos de cada ejecución conservados durante 30 días.
 
 ## Secrets requeridos
 
-Crear en `Settings -> Secrets and variables -> Actions -> Repository secrets`:
+En `Settings → Secrets and variables → Actions`:
 
 - `NIE`
 - `NOMBRE_COMPLETO`
@@ -19,10 +22,4 @@ Crear en `Settings -> Secrets and variables -> Actions -> Repository secrets`:
 - `EMAIL_DESTINO`
 - `EMAIL_PASSWORD`
 
-`EMAIL_PASSWORD` debe ser una contraseña de aplicación de Gmail, no la contraseña normal.
-
-## Ejecución
-
-Desde GitHub: pestaña `Actions`, seleccionar `Monitor citas jura` y pulsar `Run workflow`.
-
-También queda programado para ejecutarse una vez por hora.
+`EMAIL_PASSWORD` debe ser una contraseña de aplicación de Gmail.
