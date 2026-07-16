@@ -1,18 +1,11 @@
-# Credenciales locales
 config_citas.py
 .env
-
-# Archivos temporales
 monitor_citas.log
 capturas/
-
-# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .pytest_cache/
-
-# Sistema
 .DS_Store
 Thumbs.db
